@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=Lato:wght@400;700&family=Roboto&display=swap"> 
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="assets/favicon.ico">
+    <title>Les petits plats</title>
+</head>
+<body>
+    <header>
+        <img src="assets/logo.png" alt="Logo Les petits plats">
+        <h1>Les petits plats</h1>
+    </header>
+    <main>
+        <section class="search-section">
+            <label for="main-search" class="sr-only">Recherche principale</label>
+            <input type="search" id="main-search" placeholder="Rechercher une recette" />
+
+            <div id="filters"></div>
+
+            <div id="secondary-search">
+                <div class="ingredients">
+                    <div class="secondary-search-wrapper">
+                        <label for="ingredients-search">Ingrédients</label>
+                        <input type="search" id="ingredients-search" />
+                    </div>
+                    <ul id="ingredients-list"></ul>
+                </div>
+                <div class="appliance">
+                    <div class="secondary-search-wrapper">
+                        <label for="appliance-search">Appareils</label>
+                        <input type="search" id="appliance-search" />
+                    </div>
+                    <ul id="appliance-list"></ul>
+                </div>
+                <div class="ustensils">
+                    <div class="secondary-search-wrapper">
+                        <label for="ustensils-search">Ustensiles</label>
+                        <input type="search" id="ustensils-search" />
+                    </div>
+                    <ul id="ustensils-list"></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
