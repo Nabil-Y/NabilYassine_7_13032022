@@ -1,4 +1,5 @@
 const cardTemplate = document.querySelector("[data-card-template]");
+const liTemplate = document.querySelector("[data-li-template]");
 
 const getData = async () => {
     await fetch("./data/recipes.js")
@@ -14,13 +15,19 @@ const createCard = (data) => {
         const time = card.querySelector(".meal-time");
         const ingredientsList = card.querySelector(".meal-ingredients-list");
         const recipe = card.querySelector(".meal-recipe");
+        
         title.innerText = meal.name;
-        time.innerText = `${meal.time} min`;
+        time.innerText = `${meal.time}min`;
         recipe.innerText = meal.description;
-        let list = "";
-        meal.ingredients.forEach( ingredient => 
-            list += `${ingredient.ingredient}: ${ingredient.unit ? ingredient.quantity + " " + ingredient.unit : ingredient.quantity} \r`)
-        ingredientsList.innerText = list;
+
+        meal.ingredients.forEach( ingredient => {
+            const li = liTemplate.content.cloneNode(true).children[0];
+            li.querySelector(".bold").innerText = `${ingredient.ingredient}:` ;
+            ingredient.quantity ?  li.querySelector(".quantity").innerText = ` ${ingredient.quantity}` : li.querySelector(".bold").innerText = `${ingredient.ingredient}`  ;
+            ingredient.unit ? li.querySelector(".unit").innerText = ` ${ingredient.unit}` : "" ;
+            Array.from(li.children).forEach(child => child.innerText ? "" : li.removeChild(child));
+            ingredientsList.appendChild(li);
+        })
         document.querySelector(".meal-cards-gallery").appendChild(card);
     })
 

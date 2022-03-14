@@ -17,8 +17,10 @@
     </header>
     <main>
         <section class="search-section">
-            <label for="main-search" class="sr-only">Recherche principale</label>
-            <input type="search" id="main-search" placeholder="Rechercher une recette" />
+            <div class="top-search">
+                <label for="main-search" class="sr-only">Recherche principale</label>
+                <input type="search" id="main-search" placeholder="Rechercher une recette" />
+            </div>
 
             <div id="filters"></div>
 
@@ -52,15 +54,20 @@
     <template data-card-template>
         <article class="meal-card">
             <img src="/assets/default-meal.jpeg" alt="Plat prêt à être mangé">
-            <div class="meal-top">
-                <h2 class="meal-title"></h2>
-                <p class="meal-time"></p>
-            </div>
-            <div class="meal-bottom">
-                <ul class="meal-ingredients-list"></ul>
-                <p class="meal-recipe"></p>
+            <div class="card-bottom">
+                <div class="meal-top">
+                    <h2 class="meal-title"></h2>
+                    <p class="meal-time"></p>
+                </div>
+                <div class="meal-bottom">
+                    <ul class="meal-ingredients-list"></ul>
+                    <p class="meal-recipe"></p>
+                </div>
             </div>
         </article>
+    </template>
+    <template data-li-template>
+        <li><span class="bold"></span><span class="quantity"></span><span class="unit"></span></li>
     </template>
     <script type="module" src="scripts/index.js"></script>
 </body>
