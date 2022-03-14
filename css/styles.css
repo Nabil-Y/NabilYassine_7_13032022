@@ -35,7 +35,7 @@ header img {
 
 main {
     width: 100%;
-    padding: 0 10%;
+    padding: 0 13%;
 }
 
 input {
@@ -139,7 +139,7 @@ input {
 }
 
 .card-bottom {
-    padding:10px 20px;
+    padding: 1rem;
 }
 
 .meal-top {
@@ -195,6 +195,10 @@ input {
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     height: 110px;
+}
+
+.meal-recipe {
+    font-family: var(--roboto);
 }
 
 /* Utility classes*/
