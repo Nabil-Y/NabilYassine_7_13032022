@@ -46,6 +46,7 @@ input {
     color: var(--white);
     width: 150px;
     height: 70px;
+    transition: width 0.4s ease-in-out;
 }
 
 .ingredients input {
@@ -105,6 +106,7 @@ input {
     top:50%;
     right: 2.4rem;
     transform: translateY(-50%);
+    transition: transform 0.4s ease-in-out;
 }
 
 .secondary-search-wrapper.input:focus .secondary-search-wrapper::after  {
@@ -209,4 +211,8 @@ input {
 
 .rotate-pseudo::after {
     transform: rotate(180deg) translateY(50%);
+}
+
+.hidden {
+    display: none;
 }

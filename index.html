@@ -51,8 +51,8 @@
         <section class="meal-cards-gallery">
         </section>
     </main>
-    <template data-card-template>
-        <article class="meal-card" tabindex="0">
+    <template>
+        <article data-meal-card class="meal-card" tabindex="0">
             <img src="/assets/default-meal.jpeg" alt="Plat prêt à être mangé">
             <div class="card-bottom">
                 <div class="meal-top">
@@ -65,10 +65,14 @@
                 </div>
             </div>
         </article>
+
+        <li data-card-li ><span class="bold"></span><span class="quantity"></span><span class="unit"></span></li>
+
+        <li data-search-li></li>
     </template>
-    <template data-li-template>
+    <!-- <template data-li-template>
         <li><span class="bold"></span><span class="quantity"></span><span class="unit"></span></li>
-    </template>
+    </template> -->
     <script type="module" src="scripts/index.js"></script>
 </body>
 </html>
