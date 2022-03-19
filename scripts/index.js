@@ -1,12 +1,7 @@
+import recipes from '/data/recipes.js';
+
 const cardTemplate = document.querySelector("[data-card-template]");
 const liTemplate = document.querySelector("[data-li-template]");
-
-const getData = async () => {
-    await fetch("./data/recipes.js")
-        .then(res => res.json() )
-        .then(data => createCard(data) )
-        .catch(error => console.log(error) )
-}
 
 const createCard = (data) => {
     data.forEach(meal => {
@@ -34,7 +29,7 @@ const createCard = (data) => {
 }
 
 const init = () => {
-    getData();
+    createCard(recipes);
 }
 
 init();
