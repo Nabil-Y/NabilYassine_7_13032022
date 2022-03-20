@@ -49,15 +49,18 @@ input {
     transition: width 0.4s ease-in-out;
 }
 
-.ingredients input {
+.ingredients input,
+.ingredients ul {
     background: var(--ingredient-color);
 }
 
-.appliances input {
+.appliances input,
+.appliances ul {
     background: var(--appliance-color);
 }
 
-.ustensils input {
+.ustensils input,
+.ustensils ul {
     background: var(--ustensil-color);
 }
 .top-search {
@@ -87,6 +90,41 @@ input {
 #secondary-search {
     display: flex;
     color: var(--white);
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-list {
+    position: absolute;
+    display: flex;
+    flex-flow: wrap column;
+    max-height: 400px;
+    overflow: hidden;
+    width: 450px;
+    z-index: 1;
+    transform: translateY(-10px);
+    transition: width 0.4s ease-in-out;
+    border-radius: 5px;
+}
+
+.search-list li {    width: 150px;
+    min-width: 0;
+}
+
+.search-list a {
+    display: flex;
+    padding: 1em;
+    cursor: pointer;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.search-list a:hover {
+    background-color: rgba(0,0,0,0.2);
 }
 
 .secondary-search-wrapper > * {
@@ -215,4 +253,9 @@ input {
 
 .hidden {
     display: none;
+}
+
+.hide-search {
+    visibility: hidden;
+    width: 150px;
 }

@@ -25,26 +25,26 @@
             <div id="filters"></div>
 
             <div id="secondary-search">
-                <div class="ingredients">
+                <div class="ingredients search-box">
                     <div class="secondary-search-wrapper">
                         <label for="ingredients-search">Ingrédients</label>
                         <input type="search" id="ingredients-search" />
                     </div>
-                    <ul id="ingredients-list"></ul>
+                    <ul class="hide-search search-list" id="ingredients-list"></ul>
                 </div>
-                <div class="appliances">
+                <div class="appliances search-box">
                     <div class="secondary-search-wrapper">
                         <label for="appliance-search">Appareils</label>
                         <input type="search" id="appliance-search" />
                     </div>
-                    <ul id="appliance-list"></ul>
+                    <ul class="hide-search search-list" id="appliances-list"></ul>
                 </div>
-                <div class="ustensils">
+                <div class="ustensils search-box">
                     <div class="secondary-search-wrapper">
                         <label for="ustensils-search">Ustensiles</label>
                         <input type="search" id="ustensils-search" />
                     </div>
-                    <ul id="ustensils-list"></ul>
+                    <ul class="hide-search search-list" id="ustensils-list"></ul>
                 </div>
             </div>
         </section>
@@ -68,9 +68,9 @@
 
         <li data-card-li ><span class="bold"></span><span class="quantity"></span><span class="unit"></span></li>
 
-        <li data-search-li></li>
+        <li data-search-li><a></a></li>
     </template>
     <script type="module" src="scripts/index.js"></script>
-    <script src="scripts/search.js"></script>
+    <script type="module" src="scripts/search.js"></script>
 </body>
 </html>
