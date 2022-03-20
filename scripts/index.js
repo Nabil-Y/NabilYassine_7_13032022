@@ -5,8 +5,8 @@ const ingredientList = [];
 const applianceList = []; 
 const ustensilList = []; 
 
-const createCard = () => {
-    recipes.forEach(meal => {
+const createCard = (data) => {
+    data.forEach(meal => {
         const card = template.content.cloneNode(true).children[0];
         const title = card.querySelector(".meal-title");
         const time = card.querySelector(".meal-time");
@@ -58,7 +58,7 @@ const addEvents = () => {
 }
 
 const init = () => {
-    createCard();
+    createCard(recipes);
     getLists();
     addEvents();
 }
