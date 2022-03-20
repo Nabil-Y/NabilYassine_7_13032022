@@ -98,23 +98,24 @@ input {
 
 .search-list {
     position: absolute;
-    display: flex;
-    flex-flow: wrap column;
-    max-height: 400px;
+    display: grid;
+    grid-template-columns: repeat(3,150px);
+    max-height: 390px;
     overflow: hidden;
     width: 450px;
     z-index: 1;
     transform: translateY(-10px);
     transition: width 0.4s ease-in-out;
-    border-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
-.search-list li {    width: 150px;
-    min-width: 0;
+.search-list li {    
+    display: flex;
 }
 
 .search-list a {
-    display: flex;
+    width: 150px;
     padding: 1em;
     cursor: pointer;
     min-width: 0;

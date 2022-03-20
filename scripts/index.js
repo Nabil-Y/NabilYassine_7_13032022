@@ -1,9 +1,11 @@
+// Initialisation
+
 import recipes from '/data/recipes.js';
+import { search, filteredRecipes } from './search.js';
 
 const template = document.querySelector('template');
-const ingredientList = []; 
-const applianceList = []; 
-const ustensilList = []; 
+
+// Création des cartes (html)
 
 const createCard = (data) => {
     data.forEach(meal => {
@@ -29,31 +31,18 @@ const createCard = (data) => {
     })
 }
 
+// Création des listes (html)
+
 const createLists = (data) => {
+    const ingredientList = []; 
+    const applianceList = []; 
+    const ustensilList = []; 
     data.forEach( meal => {
         meal.ingredients.forEach( item => ingredientList.indexOf(item.ingredient) === -1 ? ingredientList.push(item.ingredient) : "" );
         applianceList.indexOf(meal.appliance) === -1 ? applianceList.push(meal.appliance) : "" ;
         meal.ustensils.forEach( ustensil => ustensilList.indexOf(ustensil) === -1 ? ustensilList.push(ustensil) : "" );
     })
-    // ingredientList.sort()
-    // applianceList.sort()
-    // ustensilList.sort()
-
-    // ingredientList.forEach(ingredient => {
-    //     const ingredientLi = template.content.cloneNode(true).children[2];
-    //     ingredientLi.innerText = ingredient
-    //     document.getElementById("ingredients-list").appendChild(ingredientLi)
-    // })
-    // applianceList.forEach(appliance => {
-    //     const applianceLi = template.content.cloneNode(true).children[2];
-    //     applianceLi.innerText = appliance
-    //     document.getElementById("appliances-list").appendChild(applianceLi)
-    // })
-    // ustensilList.forEach( ustensil => {
-    //     const ustensilLi = template.content.cloneNode(true).children[2];
-    //     ustensilLi.innerText = ustensil
-    //     document.getElementById("ustensils-list").appendChild(ustensilLi)
-    // })
+    document.querySelectorAll(".search-list").forEach(searchlist => searchlist.innerHTML ="")
     const lists = [ingredientList, applianceList, ustensilList]
     lists.forEach( list => {
         list.sort();
@@ -75,13 +64,61 @@ const createLists = (data) => {
     })
 }
 
-const addEvents = () => {
+// Ajouter evenements des barres de recherches (elements fixes)
+
+const addSearchboxEvents = () => {
     const searchBoxes = document.querySelectorAll(".secondary-search-wrapper input");
     searchBoxes.forEach(input => {
         input.addEventListener("focus", (event) => focusSecondarySearch(event, "450px") )
         input.addEventListener("focusout", (event) => focusSecondarySearch(event, "150px"))
     }) 
+
+    document.getElementById("ingredients-search").addEventListener("input", (event) => {
+        const ingredientResult = event.target.value.toLowerCase();
+        let newFilteredRecipes = filteredRecipes.filter( meal => meal.ingredients.some(item => item.ingredient.toLowerCase().includes(ingredientResult)))
+        newFilteredRecipes.length === 0 ? createLists(recipes) : createLists(newFilteredRecipes);
+        addLiEvents()
+    })
+
+    document.getElementById("appliances-search").addEventListener("input", (event) => {
+        const applianceResult = event.target.value.toLowerCase();
+        let newFilteredRecipes = filteredRecipes.filter( meal => meal.appliance.toLowerCase().includes(applianceResult))
+        newFilteredRecipes.length === 0 ? createLists(recipes) : createLists(newFilteredRecipes);
+        addLiEvents()
+    })
+
+    document.getElementById("ustensils-search").addEventListener("input", (event) => {
+        const ustensilResult = event.target.value.toLowerCase();
+        let newFilteredRecipes = filteredRecipes.filter( meal => meal.ustensils.some(ustensil => ustensil.toLowerCase().includes(ustensilResult)))
+        newFilteredRecipes.length === 0 ? createLists(recipes) : createLists(newFilteredRecipes);
+        addLiEvents()
+    })
+
+    addLiEvents();
 }
+
+// Ajouter evenements des listes (elements supprimables)
+const addLiEvents = () => {
+    document.querySelectorAll(".search-list li").forEach(li => li.addEventListener("click", (event) => {
+        document.getElementById('filters').appendChild(event.currentTarget)
+        filterSearch()
+        
+        document.querySelectorAll("#filters li").forEach(item => item.addEventListener("click", (event) => {
+                document.querySelector('.search-list').appendChild(event.currentTarget)
+                document.querySelectorAll(".search-list").forEach(searchlist => searchlist.innerHTML ="")
+                createLists(filteredRecipes);
+                addLiEvents();
+        }))
+    }))
+}
+
+// test li Event 
+const filterSearch = () => {
+    document.querySelector(".meal-cards-gallery").innerHTML = "";
+    createCard(filteredRecipes)
+}
+
+// change style des barres de recherches selectionnées
 
 const focusSecondarySearch = (event, data) => {
     const input = event.currentTarget;
@@ -92,12 +129,23 @@ const focusSecondarySearch = (event, data) => {
     input.parentElement.nextElementSibling.classList.toggle("hide-search")
 }
 
+// Mise à jour des cartes et listes
+export const updateGallery = (data) => {
+    document.querySelector(".meal-cards-gallery").innerHTML = "";
+    document.querySelectorAll(".search-list").forEach(searchlist => searchlist.innerHTML ="")
+    createCard(data);
+    createLists(data);
+    addLiEvents();
+}
+
+// Lancement initial du script
 const init = () => {
-    createCard(recipes);
-    createLists(recipes);
-    addEvents();
+    updateGallery(recipes);
+    search();
+    addSearchboxEvents();
 }
 
 init();
 
-export default createCard;
+
+

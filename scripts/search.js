@@ -1,19 +1,17 @@
 import recipes from '/data/recipes.js';
-import createCard from './index.js';
-let filteredRecipes = [];
+import {updateGallery} from './index.js';
 
-document.getElementById("main-search").addEventListener('input', (event) => mainSearch(event) )
+export let filteredRecipes = [];
 
-const mainSearch = (event) => {
-    const result = event.target.value.toLowerCase();
-    const cardGallery = document.querySelector(".meal-cards-gallery");
+export const search = () => {
+    const result = document.getElementById("main-search").value.toLowerCase();
     if (result.length >= 3) {
         filteredRecipes = recipes.filter(meal => 
             meal.name.toLowerCase().includes(result) || meal.description.toLowerCase().includes(result) || meal.ingredients.some(item => item.ingredient.toLowerCase().includes(result)) )
+            filteredRecipes.length === 0 ? document.querySelector(".meal-cards-gallery").textContent = 'Aucune recette ne correspond à vos critères' : updateGallery(filteredRecipes);
     } else {
-        cardGallery.innerHTML = '';
-        return createCard(recipes);
+        updateGallery(recipes)
     }
-    cardGallery.innerHTML = '';
-    filteredRecipes.length === 0 ? cardGallery.textContent = 'Aucune recette ne correspond à vos critères' : createCard(filteredRecipes);
 }
+
+document.getElementById("main-search").addEventListener('input', search)
