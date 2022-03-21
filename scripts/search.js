@@ -1,9 +1,6 @@
-import recipes from '/data/recipes.js';
-import {updateGallery} from './index.js';
+let filteredRecipes = [];
 
-export let filteredRecipes = [];
-
-export const search = () => {
+const search = () => {
     const result = document.getElementById("main-search").value.toLowerCase();
     if (result.length >= 3) {
         filteredRecipes = recipes.filter(meal => 

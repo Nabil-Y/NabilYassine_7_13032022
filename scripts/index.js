@@ -1,9 +1,11 @@
 // Initialisation
 
-import recipes from '/data/recipes.js';
-import { search, filteredRecipes } from './search.js';
-
 const template = document.querySelector('template');
+const ingredientList = []; 
+const applianceList = []; 
+const ustensilList = []; 
+let tagFilteredRecipes;
+
 
 // Création des cartes (html)
 
@@ -33,11 +35,8 @@ const createCard = (data) => {
 
 // Création des listes (html)
 
-const createLists = (data) => {
-    const ingredientList = []; 
-    const applianceList = []; 
-    const ustensilList = []; 
-    data.forEach( meal => {
+const createLists = () => {
+    recipes.forEach( meal => {
         meal.ingredients.forEach( item => ingredientList.indexOf(item.ingredient) === -1 ? ingredientList.push(item.ingredient) : "" );
         applianceList.indexOf(meal.appliance) === -1 ? applianceList.push(meal.appliance) : "" ;
         meal.ustensils.forEach( ustensil => ustensilList.indexOf(ustensil) === -1 ? ustensilList.push(ustensil) : "" );
@@ -48,20 +47,30 @@ const createLists = (data) => {
         list.sort();
         list.forEach( (item) => {
             const itemLi = template.content.cloneNode(true).children[2];
-            itemLi.children[0].textContent = `${item.slice(0,1).toUpperCase()}${item.slice(1).toLowerCase()}`;
+            itemLi.firstElementChild.textContent = `${item.slice(0,1).toUpperCase()}${item.slice(1).toLowerCase()}`;
             switch(list) {
                 case ingredientList:
-                    document.getElementById(`ingredients-list`).appendChild(itemLi);
+                    const inputIngredient = document.getElementById(`ingredients-search`).value.toLowerCase();
+                    if ( !inputIngredient || itemLi.firstElementChild.textContent.toLowerCase().includes(inputIngredient)) {
+                        return document.getElementById(`ingredients-list`).appendChild(itemLi);
+                    }
                 break;
                 case applianceList:
-                    document.getElementById(`appliances-list`).appendChild(itemLi);
+                    const inputAppliance = document.getElementById(`appliances-search`).value.toLowerCase();
+                    if ( !inputAppliance || itemLi.firstElementChild.textContent.toLowerCase().includes(inputAppliance)) {
+                        return document.getElementById(`appliances-list`).appendChild(itemLi);
+                    }
                 break;
                 case ustensilList:
-                    document.getElementById(`ustensils-list`).appendChild(itemLi);
+                    const inputUstensil = document.getElementById(`ustensils-search`).value.toLowerCase();
+                    if ( !inputUstensil || itemLi.firstElementChild.textContent.toLowerCase().includes(inputUstensil)) {
+                        return document.getElementById(`ustensils-list`).appendChild(itemLi);
+                    }
                 break;
             }
         })
     })
+    addLiEvents();
 }
 
 // Ajouter evenements des barres de recherches (elements fixes)
@@ -69,53 +78,78 @@ const createLists = (data) => {
 const addSearchboxEvents = () => {
     const searchBoxes = document.querySelectorAll(".secondary-search-wrapper input");
     searchBoxes.forEach(input => {
-        input.addEventListener("focus", (event) => focusSecondarySearch(event, "450px") )
+        input.addEventListener("focus", (event) => {focusSecondarySearch(event, "450px");createLists;} )
         input.addEventListener("focusout", (event) => focusSecondarySearch(event, "150px"))
+        input.addEventListener("input", createLists)
     }) 
-
-    document.getElementById("ingredients-search").addEventListener("input", (event) => {
-        const ingredientResult = event.target.value.toLowerCase();
-        let newFilteredRecipes = filteredRecipes.filter( meal => meal.ingredients.some(item => item.ingredient.toLowerCase().includes(ingredientResult)))
-        newFilteredRecipes.length === 0 ? createLists(recipes) : createLists(newFilteredRecipes);
-        addLiEvents()
-    })
-
-    document.getElementById("appliances-search").addEventListener("input", (event) => {
-        const applianceResult = event.target.value.toLowerCase();
-        let newFilteredRecipes = filteredRecipes.filter( meal => meal.appliance.toLowerCase().includes(applianceResult))
-        newFilteredRecipes.length === 0 ? createLists(recipes) : createLists(newFilteredRecipes);
-        addLiEvents()
-    })
-
-    document.getElementById("ustensils-search").addEventListener("input", (event) => {
-        const ustensilResult = event.target.value.toLowerCase();
-        let newFilteredRecipes = filteredRecipes.filter( meal => meal.ustensils.some(ustensil => ustensil.toLowerCase().includes(ustensilResult)))
-        newFilteredRecipes.length === 0 ? createLists(recipes) : createLists(newFilteredRecipes);
-        addLiEvents()
-    })
-
-    addLiEvents();
 }
 
-// Ajouter evenements des listes (elements supprimables)
 const addLiEvents = () => {
-    document.querySelectorAll(".search-list li").forEach(li => li.addEventListener("click", (event) => {
-        document.getElementById('filters').appendChild(event.currentTarget)
-        filterSearch()
-        
-        document.querySelectorAll("#filters li").forEach(item => item.addEventListener("click", (event) => {
-                document.querySelector('.search-list').appendChild(event.currentTarget)
-                document.querySelectorAll(".search-list").forEach(searchlist => searchlist.innerHTML ="")
-                createLists(filteredRecipes);
-                addLiEvents();
-        }))
+    document.querySelectorAll(".search-list li").forEach( li => li.addEventListener("click", (event) => {
+        const tag = event.target.cloneNode(true);
+        switch(li.closest("ul").id) {
+            case "ingredients-list":
+                if (document.querySelectorAll(".ig-tag").length > 0) {
+                    document.querySelectorAll(".ig-tag").forEach( item => document.getElementById("filters").removeChild(item))
+                }
+                tag.classList.add("ig-tag")
+                tag.addEventListener("click", event => {
+                    event.target.parentElement.removeChild(event.target)
+                    document.querySelector(".meal-cards-gallery").innerHTML = "";
+                    createCard(filteredRecipes)
+                    if (document.querySelectorAll("#filters a").length === 0) return createCard(recipes)
+                })
+                document.getElementById("filters").appendChild(tag)
+                filteredRecipes.length === 0 
+                    ? tagFilteredRecipes = recipes.filter( meal=> meal.ingredients.some(item => item.ingredient.toLowerCase().includes(tag.innerText.toLowerCase()))) 
+                    : tagFilteredRecipes = filteredRecipes.filter( meal=> meal.ingredients.some(item => item.ingredient.toLowerCase().includes(tag.innerText.toLowerCase()))) 
+                ;
+                filteredRecipes=tagFilteredRecipes
+                document.querySelector(".meal-cards-gallery").innerHTML = "";
+                createCard(tagFilteredRecipes)   
+            break;
+            case "appliances-list":
+                if (document.querySelectorAll(".ap-tag").length > 0) {
+                    document.querySelectorAll(".ap-tag").forEach( item => document.getElementById("filters").removeChild(item))
+                }
+                tag.classList.add("ap-tag")
+                tag.addEventListener("click", event => {
+                    event.target.parentElement.removeChild(event.target)
+                    document.querySelector(".meal-cards-gallery").innerHTML = "";
+                    createCard(filteredRecipes)
+                    if (document.querySelectorAll("#filters a").length === 0) return createCard(recipes)
+                })
+                document.getElementById("filters").appendChild(tag)    
+                filteredRecipes.length === 0 
+                    ? tagFilteredRecipes = recipes.filter( meal => meal.appliance.toLowerCase().includes(tag.innerText.toLowerCase()))
+                    : tagFilteredRecipes = filteredRecipes.filter( meal => meal.appliance.toLowerCase().includes(tag.innerText.toLowerCase()))
+                ; 
+                filteredRecipes=tagFilteredRecipes
+                document.querySelector(".meal-cards-gallery").innerHTML = "";
+                createCard(tagFilteredRecipes)  
+            break;
+            case "ustensils-list":
+                if (document.querySelectorAll(".us-tag").length > 0) {
+                    document.querySelectorAll(".us-tag").forEach( item => document.getElementById("filters").removeChild(item))
+                }
+                tag.classList.add("us-tag")
+                tag.addEventListener("click", event => {
+                    event.target.parentElement.removeChild(event.target)
+                    document.querySelector(".meal-cards-gallery").innerHTML = "";
+                    createCard(filteredRecipes)
+                    if (document.querySelectorAll("#filters a").length === 0) return createCard(recipes)
+                })
+                document.getElementById("filters").appendChild(tag)  
+                filteredRecipes.length === 0 
+                    ? tagFilteredRecipes = recipes.filter( meal=> meal.ustensils.some(ustensil => ustensil.toLowerCase().includes(tag.innerText.toLowerCase())))
+                    : tagFilteredRecipes = filteredRecipes.filter( meal=> meal.ustensils.some(ustensil => ustensil.toLowerCase().includes(tag.innerText.toLowerCase())))
+                ;
+                filteredRecipes=tagFilteredRecipes
+                document.querySelector(".meal-cards-gallery").innerHTML = "";
+                createCard(tagFilteredRecipes)     
+            break;
+        }
     }))
-}
-
-// test li Event 
-const filterSearch = () => {
-    document.querySelector(".meal-cards-gallery").innerHTML = "";
-    createCard(filteredRecipes)
 }
 
 // change style des barres de recherches selectionnées
@@ -125,17 +159,15 @@ const focusSecondarySearch = (event, data) => {
     input.style.width = data
     input.previousElementSibling.classList.toggle("sr-only")
     input.parentElement.classList.toggle("rotate-pseudo")
-    input.value = ""
     input.parentElement.nextElementSibling.classList.toggle("hide-search")
+    input.value = ""
 }
 
 // Mise à jour des cartes et listes
-export const updateGallery = (data) => {
+const updateGallery = (data) => {
     document.querySelector(".meal-cards-gallery").innerHTML = "";
-    document.querySelectorAll(".search-list").forEach(searchlist => searchlist.innerHTML ="")
     createCard(data);
-    createLists(data);
-    addLiEvents();
+    createLists();
 }
 
 // Lancement initial du script

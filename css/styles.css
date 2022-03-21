@@ -49,23 +49,36 @@ input {
     transition: width 0.4s ease-in-out;
 }
 
+#filters a {
+    display: inline-block;
+    padding: 1em;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .ingredients input,
-.ingredients ul {
+.ingredients ul,
+.ig-tag {
     background: var(--ingredient-color);
 }
 
 .appliances input,
-.appliances ul {
+.appliances ul,
+.ap-tag {
     background: var(--appliance-color);
 }
 
 .ustensils input,
-.ustensils ul {
+.ustensils ul,
+.us-tag {
     background: var(--ustensil-color);
 }
+
 .top-search {
     position: relative;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .top-search::after {
@@ -163,7 +176,7 @@ input {
     display: grid;
     grid-template-columns: repeat( auto-fill, minmax(320px , 1fr) );
     gap: 50px;
-    margin-top: 2rem;
+    margin: 2rem 0;
 }
 
 .meal-card {
