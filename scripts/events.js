@@ -42,7 +42,7 @@ const addLiEvents = () => {
 const createTag = (tagType, tag) => {
     const img = document.createElement("img");
     img.setAttribute('alt', "Close tag icon");
-    img.setAttribute('src', '/assets/remove.png');
+    img.setAttribute('src', './assets/remove.png');
     img.classList.add("remove-tag");
 
     tag.classList.add(tagType);
