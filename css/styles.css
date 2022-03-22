@@ -56,6 +56,19 @@ input {
     margin-right: 1rem;
     border-radius: 5px;
     cursor: pointer;
+    color: var(--white);
+}
+
+#filters a:hover {
+    color: var(--black);
+}
+
+.remove-tag {
+    display: inline-block;
+    width: 20px;
+    margin-left: 10px;
+    transform: translateY(3px);
+    pointer-events: none;
 }
 
 .ingredients input,
