@@ -167,7 +167,7 @@ input {
     position: absolute;
     height: 10px;
     width: 16px;
-    background: url(/assets/Arrow.png);
+    background: url("../assets/Arrow.png");
     top:50%;
     right: 2.4rem;
     transform: translateY(-50%);
