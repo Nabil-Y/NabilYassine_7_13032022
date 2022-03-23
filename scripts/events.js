@@ -2,18 +2,18 @@
 const addSearchboxEvents = () => {
     const searchBoxes = document.querySelectorAll(".secondary-search-wrapper input");
     searchBoxes.forEach(input => {
-        input.addEventListener("focus", (event) => focusSecondarySearch(event, "450px") );
-        input.addEventListener("focusout", (event) => focusSecondarySearch(event, "150px") );
-        input.addEventListener("input", mainSearch );
+        input.addEventListener("focus", (event) => focusSecondarySearch(event));
+        input.addEventListener("focusout", (event) => focusSecondarySearch(event));
+        input.addEventListener("input", mainSearch);
     }) 
 
     document.getElementById("main-search").addEventListener('input', mainSearch);
 }
 
 // change style des barres de recherches selectionnées
-const focusSecondarySearch = (event, data) => {
+const focusSecondarySearch = (event) => {
     const input = event.currentTarget;
-    input.style.width = data;
+    input.classList.toggle("secondary-input__focus");
     input.previousElementSibling.classList.toggle("sr-only");
     input.parentElement.classList.toggle("rotate-pseudo");
     input.parentElement.nextElementSibling.classList.toggle("hide-search");
@@ -22,20 +22,22 @@ const focusSecondarySearch = (event, data) => {
 
 // Ajouter events des LI
 const addLiEvents = () => {
-    document.querySelectorAll(".search-list li").forEach( li => li.addEventListener("click", (event) => {
-        const tagElement = event.target.cloneNode(true);
-        switch(li.closest("ul").id) {
-            case "ingredients-list":
-                createTag("ig-tag", tagElement);
-            break;
-            case "appliances-list":
-                createTag("ap-tag", tagElement);
-            break;
-            case "ustensils-list":
-                createTag("us-tag", tagElement);
-            break;
-        }
-    }))
+    document.querySelectorAll(".search-list li").forEach( 
+        li => "click,touchstart".split(',').forEach( type => li.addEventListener(type, (event) => {
+            const tagElement = event.target.cloneNode(true);
+            switch(li.closest("ul").id) {
+                case "ingredients-list":
+                    createTag("ig-tag", tagElement);
+                break;
+                case "appliances-list":
+                    createTag("ap-tag", tagElement);
+                break;
+                case "ustensils-list":
+                    createTag("us-tag", tagElement);
+                break;
+            }
+        })
+    ))
 }
 
 // Creer tag lors du click sur un LI

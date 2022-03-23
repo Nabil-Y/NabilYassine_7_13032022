@@ -1,3 +1,17 @@
+/*
+Variables
+Desktop - General 
+Desktop - Search 	 
+   Main search 	 
+   Secondary search 	 
+   Filters and lists 
+Desktop - Cards 
+Desktop - Utility classes
+Media Queries 
+*/
+
+
+/* Variables */
 :root {
     --primary-color: #D04F4F;
     --ingredient-color: #3282F7;
@@ -12,11 +26,14 @@
     --roboto: 'Roboto', sans-serif;
 }
 
+/* Desktop - General */
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: var(--lato);
+    overflow-x: hidden;
 }
 
 header {
@@ -38,55 +55,15 @@ main {
     padding: 0 13%;
 }
 
-input {
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    padding: 1rem;
-    color: var(--white);
-    width: 150px;
-    height: 70px;
-    transition: width 0.4s ease-in-out;
-}
+/* Desktop - Search */
 
-#filters a {
-    display: inline-block;
-    padding: 1em;
-    margin-bottom: 1rem;
-    margin-right: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    color: var(--white);
-}
+/* Main search */
 
-#filters a:hover {
+#main-search {
+    width: 100%;
+    background: var(--grey);
     color: var(--black);
-}
-
-.remove-tag {
-    display: inline-block;
-    width: 20px;
-    margin-left: 10px;
-    transform: translateY(3px);
-    pointer-events: none;
-}
-
-.ingredients input,
-.ingredients ul,
-.ig-tag {
-    background: var(--ingredient-color);
-}
-
-.appliances input,
-.appliances ul,
-.ap-tag {
-    background: var(--appliance-color);
-}
-
-.ustensils input,
-.ustensils ul,
-.us-tag {
-    background: var(--ustensil-color);
+    padding-right: 4rem;
 }
 
 .top-search {
@@ -106,16 +83,68 @@ input {
 }
 
 
-#main-search {
-    width: 100%;
-    background: var(--grey);
-    color: var(--black);
-    padding-right: 4rem;
+input {
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 1rem;
+    color: var(--white);
+    width: 150px;
+    height: 70px;
+    transition: width 0.4s ease-in-out;
 }
+
+/* Secondary search */
 
 #secondary-search {
     display: flex;
     color: var(--white);
+}
+
+.secondary-search-wrapper {
+    position: relative;
+}
+
+.secondary-search-wrapper > * {
+    margin-right: 1.4rem;
+}
+
+.secondary-search-wrapper::after {
+    content: "";
+    position: absolute;
+    height: 10px;
+    width: 16px;
+    background: url("../assets/Arrow.png");
+    top:50%;
+    right: 2.4rem;
+    transform: translateY(-50%);
+    transition: transform 0.4s ease-in-out;
+}
+
+.secondary-search-wrapper.input:focus .secondary-search-wrapper::after  {
+    transform: rotate(180deg);
+}
+
+.secondary-search-wrapper label {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+}
+
+/* Filters and lists */
+#filters a {
+    display: inline-block;
+    padding: 1em;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--white);
+}
+
+#filters a:hover {
+    color: var(--black);
 }
 
 .search-box {
@@ -125,10 +154,10 @@ input {
 .search-list {
     position: absolute;
     display: grid;
-    grid-template-columns: repeat(3,150px);
+    grid-template-columns: repeat( auto-fill, minmax(150px , 1fr) );
     max-height: 390px;
-    overflow: hidden;
-    width: 450px;
+    overflow-y: scroll;
+    width: min(450px,100%);
     z-index: 1;
     transform: translateY(-10px);
     transition: width 0.4s ease-in-out;
@@ -154,36 +183,26 @@ input {
     background-color: rgba(0,0,0,0.2);
 }
 
-.secondary-search-wrapper > * {
-    margin-right: 1.4rem;
+.ingredients input,
+.ingredients ul,
+.ig-tag {
+    background: var(--ingredient-color);
 }
 
-.secondary-search-wrapper {
-    position: relative;
+.appliances input,
+.appliances ul,
+.ap-tag {
+    background: var(--appliance-color);
 }
 
-.secondary-search-wrapper::after {
-    content: "";
-    position: absolute;
-    height: 10px;
-    width: 16px;
-    background: url("../assets/Arrow.png");
-    top:50%;
-    right: 2.4rem;
-    transform: translateY(-50%);
-    transition: transform 0.4s ease-in-out;
+.ustensils input,
+.ustensils ul,
+.us-tag {
+    background: var(--ustensil-color);
 }
 
-.secondary-search-wrapper.input:focus .secondary-search-wrapper::after  {
-    transform: rotate(180deg);
-}
 
-.secondary-search-wrapper label {
-    position: absolute;
-    top: 50%;
-    left: 1rem;
-    transform: translateY(-50%);
-}
+/* Desktop - Cards */
 
 .meal-cards-gallery {
     display: grid;
@@ -268,7 +287,7 @@ input {
     font-family: var(--roboto);
 }
 
-/* Utility classes*/
+/* Desktop - Utility classes*/
 
 .bold {
     font-weight: bold;
@@ -284,5 +303,100 @@ input {
 
 .hide-search {
     visibility: hidden;
-    width: 150px;
+}
+
+.remove-tag {
+    display: inline-block;
+    width: 20px;
+    margin-left: 10px;
+    transform: translateY(3px);
+    pointer-events: none;
+}
+
+.secondary-input__focus {
+    width: 450px;
+}
+
+/* Media Queries */
+
+@media screen and (max-width:1080px) {
+    /* Tablet - Search */
+    
+    .search-list { 
+        width: min(300px,100%);
+    }
+
+    /*Tablet - Utility Classes */
+
+    .secondary-input__focus {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    /* Mobile - General */
+
+    main {
+        padding: 0 2%;
+        max-width: 500px;
+    }
+
+    input {
+        height: unset;
+        width: 100%;
+    }
+
+    /* Mobile - Search*/
+
+    #secondary-search {
+        display: block;
+    }
+
+    .secondary-search-wrapper {
+        width: 100%;
+    }
+
+    .secondary-search-wrapper > * {
+        margin-right: 0;
+    }
+
+    .search-box {
+        display: flex;
+        margin-bottom: 1rem;
+    }
+
+    #filters a {
+        padding: 0.5em;
+    }
+
+    .search-list { 
+        grid-template-columns: repeat( auto-fill, minmax(120px , 1fr) );
+        width: 100%;
+        transform: translateY(50px);
+        transition: max-height 0.4s ease-in-out;
+        font-size: 14px;
+    }
+
+    .search-list a {
+        width: 150px;
+        padding: 0.5em;
+    }
+
+    /* Mobile - Cards */
+
+    .meal-cards-gallery {
+        grid-template-columns: repeat( auto-fill, minmax(300px , 1fr) );
+        gap: 20px;
+    }
+
+    /* Mobile - Utility Classes */
+
+    .secondary-input__focus {
+        width: 100%;
+    }
+
+    .hide-search {
+        max-height: 0px;
+    }
 }
