@@ -154,9 +154,10 @@ input {
 .search-list {
     position: absolute;
     display: grid;
-    grid-template-columns: repeat( auto-fill, minmax(150px , 1fr) );
+    grid-template-columns: repeat( auto-fill, minmax(140px , 1fr) );
     max-height: 390px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    scrollbar-width: thin;
     width: min(450px,100%);
     z-index: 1;
     transform: translateY(-10px);

@@ -2,8 +2,8 @@
 const addSearchboxEvents = () => {
     const searchBoxes = document.querySelectorAll(".secondary-search-wrapper input");
     searchBoxes.forEach(input => {
-        input.addEventListener("focus", (event) => focusSecondarySearch(event));
-        input.addEventListener("focusout", (event) => focusSecondarySearch(event));
+        input.addEventListener("focus", (event) => focusSecondarySearch(event) );
+        input.addEventListener("focusout", (event) => focusSecondarySearch(event) );
         input.addEventListener("input", mainSearch);
     }) 
 
@@ -22,8 +22,7 @@ const focusSecondarySearch = (event) => {
 
 // Ajouter events des LI
 const addLiEvents = () => {
-    document.querySelectorAll(".search-list li").forEach( 
-        li => "click,touchstart".split(',').forEach( type => li.addEventListener(type, (event) => {
+    document.querySelectorAll(".search-list a").forEach( li => li.addEventListener("mousedown", (event) => {
             const tagElement = event.target.cloneNode(true);
             switch(li.closest("ul").id) {
                 case "ingredients-list":
@@ -37,7 +36,7 @@ const addLiEvents = () => {
                 break;
             }
         })
-    ))
+    )
 }
 
 // Creer tag lors du click sur un LI
