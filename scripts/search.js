@@ -18,12 +18,13 @@ const mainSearch = () => {
 
     // Main Search
     if (result.length >= 3) {   
-        const newRecipeTable = []
+        const newRecipeTable = [];
         for (let i = 0; i < filteredRecipes.length; i++) {
-            if (filteredRecipes[i].name.toLowerCase().includes(result) ||
-                filteredRecipes[i].description.toLowerCase().includes(result) ||
-                filteredRecipes[i].ingredients.some(item => item.ingredient.toLowerCase().includes(result)) ) { 
-                    newRecipeTable.push(filteredRecipes[i]);
+            const meal = filteredRecipes[i];
+            if (meal.name.toLowerCase().includes(result) ||
+                meal.description.toLowerCase().includes(result) ||
+                meal.ingredients.some(item => item.ingredient.toLowerCase().includes(result)) ) { 
+                    newRecipeTable.push(meal);
                 }
         }
 
