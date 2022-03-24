@@ -18,16 +18,21 @@ const mainSearch = () => {
 
     // Main Search
     if (result.length >= 3) {   
-        filteredRecipes = filteredRecipes.filter( meal => 
-            meal.name.toLowerCase().includes(result) ||
-            meal.description.toLowerCase().includes(result) ||
-            meal.ingredients.some(item => item.ingredient.toLowerCase().includes(result)) 
-        )
+        const newRecipeTable = []
+        for (let i = 0; i < filteredRecipes.length; i++) {
+            if (filteredRecipes[i].name.toLowerCase().includes(result) ||
+                filteredRecipes[i].description.toLowerCase().includes(result) ||
+                filteredRecipes[i].ingredients.some(item => item.ingredient.toLowerCase().includes(result)) ) { 
+                    newRecipeTable.push(filteredRecipes[i]);
+                }
+        }
 
-        filteredRecipes.length === 0 
-            ? document.querySelector(".meal-cards-gallery").textContent = 'Aucune recette ne correspond à vos critères' 
-            : updateContent(filteredRecipes)
-        ;
+        if ( filteredRecipes.length === 0 ) {
+            document.querySelector(".meal-cards-gallery").textContent = 'Aucune recette ne correspond à vos critères' 
+        } else {
+            updateContent(newRecipeTable)
+        }
+
     } else {
         updateContent(filteredRecipes)
     }
