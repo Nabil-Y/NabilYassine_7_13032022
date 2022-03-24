@@ -105,10 +105,6 @@ input {
     position: relative;
 }
 
-.secondary-search-wrapper > * {
-    margin-right: 1.4rem;
-}
-
 .secondary-search-wrapper::after {
     content: "";
     position: absolute;
@@ -116,7 +112,7 @@ input {
     width: 16px;
     background: url("../assets/Arrow.png");
     top:50%;
-    right: 2.4rem;
+    right: 1rem;
     transform: translateY(-50%);
     transition: transform 0.4s ease-in-out;
 }
@@ -149,6 +145,7 @@ input {
 
 .search-box {
     position: relative;
+    margin-right: 1.4rem;
 }
 
 .search-list {
@@ -358,13 +355,9 @@ input {
         width: 100%;
     }
 
-    .secondary-search-wrapper > * {
-        margin-right: 0;
-    }
-
     .search-box {
         display: flex;
-        margin-bottom: 1rem;
+        margin: 0 0 1rem;
     }
 
     #filters a {

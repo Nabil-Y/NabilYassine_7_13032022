@@ -1,4 +1,6 @@
-// Ajouter evenements des barres de recherches (elements fixes)
+/**
+ * Add events to main and secondary searchbars
+ */
 const addSearchboxEvents = () => {
     const searchBoxes = document.querySelectorAll(".secondary-search-wrapper input");
     searchBoxes.forEach(input => {
@@ -10,7 +12,10 @@ const addSearchboxEvents = () => {
     document.getElementById("main-search").addEventListener('input', mainSearch);
 }
 
-// change style des barres de recherches selectionnées
+/**
+ * Toggle styles and reset input value when a secondary searchbar gains/lose focus
+ * @param {FocusEvent} event 
+ */
 const focusSecondarySearch = (event) => {
     const input = event.currentTarget;
     input.classList.toggle("secondary-input__focus");
@@ -20,7 +25,9 @@ const focusSecondarySearch = (event) => {
     input.value = "";
 }
 
-// Ajouter events des LI
+/**
+ * Add events for secondary searchbox list items
+ */
 const addLiEvents = () => {
     document.querySelectorAll(".search-list a").forEach( li => li.addEventListener("mousedown", (event) => {
             const tagElement = event.target.cloneNode(true);
@@ -39,7 +46,11 @@ const addLiEvents = () => {
     )
 }
 
-// Creer tag lors du click sur un LI
+/**
+ * Creates a new tag and filters again when a list item is clicked. Also add "close" event to created tag
+ * @param {string} tagType 
+ * @param {HTMLElement} tag 
+ */
 const createTag = (tagType, tag) => {
     const img = document.createElement("img");
     img.setAttribute('alt', "Close tag icon");
@@ -54,12 +65,6 @@ const createTag = (tagType, tag) => {
     });
     document.getElementById("filters").appendChild(tag);
     mainSearch();
-}
-
-// Fonction d'initialisation pour les evenements
-const addEvents = () => {
-    addSearchboxEvents();
-    addLiEvents();
 }
 
 
