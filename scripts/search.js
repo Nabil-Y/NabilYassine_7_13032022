@@ -21,9 +21,15 @@ const mainSearch = () => {
         const newRecipeTable = [];
         for (let i = 0; i < filteredRecipes.length; i++) {
             const meal = filteredRecipes[i];
+            let ingredientsIncluded = false;
+            for (let j=0; j < meal.ingredients.length; j++) {
+                if ( meal.ingredients[j].ingredient.toLowerCase().includes(result)) {
+                    ingredientsIncluded = true;
+                }
+            }
             if (meal.name.toLowerCase().includes(result) ||
                 meal.description.toLowerCase().includes(result) ||
-                meal.ingredients.some(item => item.ingredient.toLowerCase().includes(result)) ) { 
+                ingredientsIncluded ) { 
                     newRecipeTable.push(meal);
                 }
         }
